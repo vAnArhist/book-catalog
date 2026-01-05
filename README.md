@@ -64,9 +64,9 @@ docker compose up --build
 
 ## Після запуску:
 
-- [Каталог URL](http://197.0.0.1:8080)
+- [Каталог URL](http://127.0.0.1:8080)
 
-- [Admin URL](http://197.0.0.1:8080/admin)
+- [Admin URL](http://127.0.0.1:8080/admin)
 
 ## Документація
 
