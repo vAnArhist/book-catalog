@@ -1,0 +1,66 @@
+{% extends "catalog/base.html" %}
+{% load catalog_extras %}
+{% block content %}
+<h2>{{ Book.Title }}</h2>
+
+<div style="color:#555;">
+  {% for a in Book.Authors.all %}
+    {{ a.Name }}{% if not forloop.last %}, {% endif %}
+  {% endfor %}
+</div>
+
+<div style="margin:10px 0;">
+  {% for t in Book.Tags.all %}
+  {% if t.id in SelectedTagIds %}
+    <span class="tag tag-selected">{{ t.Name }}</span>
+  {% else %}
+    <a class="tag"
+       href="/?mode={{ Mode }}{% for tid in SelectedTagIds %}&tag={{ tid }}{% endfor %}&tag={{ t.id }}">
+       {{ t.Name }}
+    </a>
+  {% endif %}
+{% endfor %}
+</div>
+
+{% if Cover %}
+  <div style="margin:12px 0;">
+    <img src="{{ Cover.Image.url }}" style="max-width:260px; border:1px solid #ddd; border-radius:8px;">
+  </div>
+{% endif %}
+
+{% if Book.Description %}
+  <p>{{ Book.Description }}</p>
+{% endif %}
+
+{% if Scans %}
+  <h3>Scans</h3>
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    {% for s in Scans %}
+      <a href="{{ s.Image.url }}" target="_blank">
+        <img src="{{ s.Image.url }}" style="width:120px; height:auto; border:1px solid #ddd; border-radius:8px;">
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<h3 style="margin-top:24px;">Similar books</h3>
+{% for b in SimilarBooks %}
+  <div class="book">
+    <div><a href="{% url 'book_detail' b.id %}"><b>{{ b.Title }}</b></a></div>
+    <div>
+        {% for t in Book.Tags.all %}
+          {% if t.id in SelectedTagIds %}
+            <span class="tag tag-selected">{{ t.Name }}</span>
+          {% else %}
+            <a class="tag"
+              href="/?mode={{ Mode }}{% for tid in SelectedTagIds %}&tag={{ tid }}{% endfor %}&tag={{ t.id }}">
+              {{ t.Name }}
+            </a>
+          {% endif %}
+        {% endfor %}
+    </div>
+  </div>
+{% empty %}
+  <p>No similar books.</p>
+{% endfor %}
+{% endblock %}

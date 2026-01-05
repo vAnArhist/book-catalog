@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Book Catalog</title>
+  <style>
+    body { font-family: sans-serif; margin: 24px; }
+    .grid { display: grid; grid-template-columns: 300px 1fr; gap: 24px; }
+    .book { padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; }
+
+    .tag {
+      display:inline-block;
+      padding:2px 8px;
+      border:1px solid #ccc;
+      border-radius:999px;
+      margin:2px;
+      font-size:12px;
+      text-decoration:none;
+      color:inherit;
+    }
+    
+    .tag:hover { background:#f3f3f3; }
+
+    .tag-selected {
+      background:#333;
+      color:#fff;
+      border-color:#333;
+      cursor:default;
+    }
+  </style>
+</head>
+<body>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;"><a href="/" style="text-decoration:none;color:inherit;">Book Catalog</a></h2>
+    <a href="/admin/">Admin</a>
+  </div>
+  <hr>
+  {% block content %}{% endblock %}
+</body>
+</html>

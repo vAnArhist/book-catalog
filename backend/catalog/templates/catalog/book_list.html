@@ -1,0 +1,73 @@
+{% extends "catalog/base.html" %}
+{% load catalog_extras %}
+{% block content %}
+<div class="grid">
+  <aside>
+    <form method="get">
+      <div>
+        <input name="q" value="{{ Query }}" placeholder="Search title/author/ISBN" style="width:100%; padding:8px;">
+      </div>
+
+      <div style="margin-top:10px;">
+        <label><input type="radio" name="mode" value="and" {% if Mode == "and" %}checked{% endif %}> AND</label>
+        <label style="margin-left:10px;"><input type="radio" name="mode" value="or" {% if Mode == "or" %}checked{% endif %}> OR</label>
+      </div>
+
+      <div style="margin-top:12px;">
+        <b>Tags</b>
+        <div style="max-height:60vh; overflow:auto; border:1px solid #eee; padding:8px; border-radius:8px;">
+          {% for t in AllTags %}
+            <div>
+              <label>
+                <input type="checkbox" name="tag" value="{{ t.id }}" {% if t.id in SelectedTagIds %}checked{% endif %}>
+                {{ t.Name }}
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:10px;">
+        <button style="padding:8px 12px;">Search</button>
+
+        <a href="{% clear_filters_url '' %}"
+          style="padding:8px 12px; border:1px solid #ccc; border-radius:6px; text-decoration:none; color:inherit;">
+          Clear filter
+        </a>
+      </div>
+    </form>
+  </aside>
+
+  <main>
+    <div><b>Results:</b> {{ Books|length }}</div>
+    <div style="margin-top:10px;">
+      {% for b in Books %}
+        <div class="book">
+          <div><a href="{% url 'book_detail' b.id %}"><b>{{ b.Title }}</b></a></div>
+          <div style="color:#555;">
+            {% for a in b.Authors.all %}
+              {{ a.Name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </div>
+          <div>
+            {% for t in b.Tags.all %}
+              {% if t.id in SelectedTagIds %}
+                <a class="tag tag-selected"
+                  href="{% remove_tag_url SelectedTagIds t.id Mode Query %}">
+                  {{ t.Name }}
+                </a>
+              {% else %}
+                <a class="tag"
+                  href="{% add_tag_url SelectedTagIds t.id Mode Query %}">
+                  {{ t.Name }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% empty %}
+        <p>No books found.</p>
+      {% endfor %}
+    </div>
+  </main>
+</div>
+{% endblock %}

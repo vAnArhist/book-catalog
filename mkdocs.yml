@@ -1,0 +1,22 @@
+site_name: Book Catalog – документація
+site_description: Документація до системи обліку та підбору книг
+site_author: Ivan
+
+
+theme:
+  name: material
+  language: uk
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+
+nav:
+  - Головна: index.md
+  - Use cases: use-cases.md
+  - Архітектура: architecture.md
+  - Модель даних: data-model.md
+  - Теги та фільтрація: filtering-and-tags.md
+  - Адмінка: admin-panel.md
+  - Docker і запуск: docker-and-deploy.md
+  - FAQ: faq.md
