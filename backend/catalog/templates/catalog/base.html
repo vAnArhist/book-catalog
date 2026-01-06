@@ -37,4 +37,13 @@
   <hr>
   {% block content %}{% endblock %}
 </body>
+
+<footer class="footer">
+  <p class="muted">© <span id="y"></span> Іван Гожій • Hosted on AWS EC2</p>
+</footer>
+
+<script>
+  document.getElementById("y").textContent = new Date().getFullYear();
+</script>
+
 </html>

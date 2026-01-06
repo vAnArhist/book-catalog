@@ -48,16 +48,9 @@
   <div class="book">
     <div><a href="{% url 'book_detail' b.id %}"><b>{{ b.Title }}</b></a></div>
     <div>
-        {% for t in Book.Tags.all %}
-          {% if t.id in SelectedTagIds %}
-            <span class="tag tag-selected">{{ t.Name }}</span>
-          {% else %}
-            <a class="tag"
-              href="/?mode={{ Mode }}{% for tid in SelectedTagIds %}&tag={{ tid }}{% endfor %}&tag={{ t.id }}">
-              {{ t.Name }}
-            </a>
-          {% endif %}
-        {% endfor %}
+      {% for t in b.Tags.all %}
+        <a class="tag" href="/?mode=or&tag={{ t.id }}">{{ t.Name }}</a>
+      {% endfor %}
     </div>
   </div>
 {% empty %}
